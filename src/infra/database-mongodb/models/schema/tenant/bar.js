@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-const barSchema = new Schema({ name: String, email: String });
+const barSchema = new Schema({ name: String, email: String })
 
 // The alternative to the export model pattern is the export schema pattern.
-module.exports = barSchema;
+module.exports = barSchema
 
 // Because if you export a model as shown below, the model will be scoped
 // to Mongoose's default connection.

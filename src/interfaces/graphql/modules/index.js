@@ -1,13 +1,11 @@
-const { makeExecutableSchema } = require("@graphql-tools/schema");
+const { makeExecutableSchema } = require('@graphql-tools/schema')
 
-const { merge } = require("lodash");
-const createSchema = require("../utils/create_schema");
+const { merge } = require('lodash')
+const createSchema = require('../utils/create_schema')
 
 module.exports = () => {
-  const { schema: userSchema, resolvers: userResolvers } = createSchema("user");
-  const { schema: tokenSchema, resolvers: tokenResolvers } = createSchema(
-    "token"
-  );
+  const { schema: userSchema, resolvers: userResolvers } = createSchema('user')
+  const { schema: tokenSchema, resolvers: tokenResolvers } = createSchema('token') // eslint-disable-line no-unused-vars
 
   const baseSchema = [
     `
@@ -21,17 +19,15 @@ module.exports = () => {
         query: Query,
         mutation: Mutation
     }
-    `,
-  ];
+    `
+  ]
 
-  const schema = [...baseSchema, ...userSchema, ...tokenSchema];
+  const schema = [...baseSchema, ...userSchema, ...tokenSchema]
 
   const options = {
     typeDefs: schema,
-    resolvers: merge(userResolvers),
-  };
+    resolvers: merge(userResolvers)
+  }
 
-  const executableSchema = makeExecutableSchema(options);
-
-  return executableSchema;
-};
+  return makeExecutableSchema(options)
+}

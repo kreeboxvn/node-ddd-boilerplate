@@ -1,7 +1,7 @@
 /**
  * this file will hold all the get use-case for user domain
  */
-const Token = require("src/domain/token");
+const Token = require('src/domain/token')
 
 /**
  * function for getter user.
@@ -11,37 +11,37 @@ module.exports = ({ userRepository, webToken }) => {
   const login = ({ body }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const credentials = Token(body);
+        const credentials = Token(body)
         const userCredentials = await userRepository.findOne({
-          attributes: ["id", "email", "password"],
+          attributes: ['id', 'email', 'password'],
           where: {
             email: credentials.email,
-            isDeleted: 0,
-          },
-        });
+            isDeleted: 0
+          }
+        })
 
         const validatePass = userRepository.validatePassword(
           userCredentials.password
-        );
+        )
 
         if (!validatePass(credentials.password)) {
-          throw new Error("Invalid Credentials");
+          throw new Error('Invalid Credentials')
         }
-        const signIn = webToken.signin();
+        const signIn = webToken.signin()
 
         resolve({
           token: signIn({
             id: userCredentials.id,
-            email: userCredentials.email,
-          }),
-        });
+            email: userCredentials.email
+          })
+        })
       } catch (error) {
-        reject(error);
+        reject(error)
       }
-    });
-  };
+    })
+  }
 
   return {
-    login,
-  };
-};
+    login
+  }
+}

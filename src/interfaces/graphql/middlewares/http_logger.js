@@ -1,11 +1,11 @@
-const morgan = require("morgan");
+const morgan = require('morgan')
 
 module.exports = (logger) => {
-  return morgan("common", {
+  return morgan('common', {
     stream: {
       write: (message) => {
-        logger.info(message.slice(0, -1));
-      },
-    },
-  });
-};
+        logger.info(message.slice(0, -1))
+      }
+    }
+  })
+}

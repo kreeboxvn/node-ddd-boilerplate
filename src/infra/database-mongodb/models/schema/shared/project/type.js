@@ -1,16 +1,16 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const projectTypeSchema = new Schema({
   code: {
     type: String,
-    required: true,
+    required: true
   },
   name: {
     type: String,
-    required: true,
-  },
-});
+    required: true
+  }
+})
 
-module.exports = projectTypeSchema;
+module.exports = projectTypeSchema

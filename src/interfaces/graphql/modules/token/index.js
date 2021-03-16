@@ -1,4 +1,4 @@
-const resolvers = require("./resolvers");
+const resolvers = require('./resolvers')
 
 module.exports = () => {
   const schema = `
@@ -10,9 +10,9 @@ module.exports = () => {
   extend type Query {
       login(email: String!, password: String!): AuthData!
   }
-`;
+`
   return {
     schema: [schema],
-    resolvers: resolvers(),
-  };
-};
+    resolvers: resolvers()
+  }
+}
