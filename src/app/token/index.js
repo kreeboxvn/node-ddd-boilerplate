@@ -1,5 +1,5 @@
-const post = require('./post')
+const login = require("./login");
 
 module.exports = {
-  post
-}
+  login,
+};

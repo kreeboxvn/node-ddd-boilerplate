@@ -1,5 +1,5 @@
-const passport = require('passport')
-const { ExtractJwt, Strategy } = require('passport-jwt')
+const passport = require("passport");
+const { ExtractJwt, Strategy } = require("passport-jwt");
 /**
  * middleware to check the if auth vaid
  */
@@ -7,33 +7,34 @@ const { ExtractJwt, Strategy } = require('passport-jwt')
 module.exports = ({ config, repository: { userRepository } }) => {
   const params = {
     secretOrKey: config.authSecret,
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt')
-  }
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+  };
 
   const strategy = new Strategy(params, (payload, done) => {
-    userRepository.findById(payload.id)
+    userRepository
+      .findById(payload.id)
       .then((user) => {
-        done(null, user)
+        done(null, user);
       })
-      .catch((error) => done(error, null))
-  })
+      .catch((error) => done(error, null));
+  });
 
-  passport.use(strategy)
+  passport.use(strategy);
 
   passport.serializeUser(function (user, done) {
-    done(null, user)
-  })
+    done(null, user);
+  });
 
   passport.deserializeUser(function (user, done) {
-    done(null, user)
-  })
+    done(null, user);
+  });
 
   return {
     initialize: () => {
-      return passport.initialize()
+      return passport.initialize();
     },
     authenticate: () => {
-      return passport.authenticate('jwt')
-    }
-  }
-}
+      return passport.authenticate("jwt");
+    },
+  };
+};

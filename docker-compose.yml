@@ -1,15 +1,15 @@
 version: "3.6"
 services:
-  web:
-    build: .
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - "4000:4000"
-    depends_on:
-      - postgres
-      - redis
+  # web:
+  #   build: .
+  #   volumes:
+  #     - .:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   ports:
+  #     - "4000:4000"
+  #   depends_on:
+  #     - postgres
+  #     - redis
 
   postgres:
     image: postgres:9.6.6-alpine
@@ -23,11 +23,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password123
 
-  redis:
-    image: redis:4.0.5-alpine
-    command: ["redis-server", "--appendonly", "yes"]
-    hostname: redis
-    volumes:
-      - ./redis-data:/data
+  # redis:
+  #   image: redis:4.0.5-alpine
+  #   command: ["redis-server", "--appendonly", "yes"]
+  #   hostname: redis
+  #   volumes:
+  #     - ./redis-data:/data
 
 

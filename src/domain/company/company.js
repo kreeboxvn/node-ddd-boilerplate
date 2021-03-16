@@ -1,6 +1,6 @@
-const t = require('tcomb')
-const { compose } = require('ramda')
-const { cleanData } = require('../helper')
+const t = require("tcomb");
+const { compose } = require("ramda");
+const { cleanData } = require("../helper");
 
 const Company = t.struct({
   id: t.maybe(t.String),
@@ -14,10 +14,7 @@ const Company = t.struct({
   createdBy: t.maybe(t.String),
   updatedBy: t.maybe(t.String),
   createdAt: t.maybe(t.Date),
-  updatedAt: t.maybe(t.Date)
-})
+  updatedAt: t.maybe(t.Date),
+});
 
-module.exports = compose(
-  cleanData,
-  Company
-)
+module.exports = compose(cleanData, Company);
