@@ -1,4 +1,4 @@
-const resolvers = require("./resolvers");
+const resolvers = require('./resolvers')
 
 module.exports = () => {
   const schema = `type User {
@@ -13,9 +13,9 @@ module.exports = () => {
   extend type Mutation {
     createUser(userInput: UserInput): User
   }
-  `;
+  `
   return {
     schema: [schema],
-    resolvers: resolvers(),
-  };
-};
+    resolvers: resolvers()
+  }
+}

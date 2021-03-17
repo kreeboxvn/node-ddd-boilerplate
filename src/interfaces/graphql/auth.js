@@ -1,6 +1,6 @@
 module.exports = () => {
   return {
     initialize: () => {},
-    authenticate: () => {},
-  };
-};
+    authenticate: () => {}
+  }
+}

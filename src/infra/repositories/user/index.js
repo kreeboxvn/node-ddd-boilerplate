@@ -1,54 +1,54 @@
-const { toEntity } = require("./transform");
-const { comparePassword } = require("../../encryption");
+const { toEntity } = require('./transform')
+const { comparePassword } = require('../../encryption')
 
 module.exports = ({ model: Model }) => {
   const getAll = (...args) => {
     return Model.findAll(...args).then((entity) =>
       entity.map((data) => {
-        const { dataValues } = data;
-        return toEntity(dataValues);
+        const { dataValues } = data
+        return toEntity(dataValues)
       })
-    );
-  };
+    )
+  }
 
   const create = async (...args) => {
     try {
-      const result = await Model.create(...args);
-      console.log(result._doc);
+      const result = await Model.create(...args)
+      console.log(result._doc)
 
-      return toEntity(result._doc);
+      return toEntity(result._doc)
     } catch (err) {
-      throw err;
+      throw err
     }
-  };
+  }
 
   const update = (...args) =>
     Model.update(...args).catch((error) => {
-      throw new Error(error);
-    });
+      throw new Error(error)
+    })
 
   const findById = (...args) =>
     Model.findByPk(...args)
       .then(({ dataValues }) => toEntity(dataValues))
       .catch((error) => {
-        throw new Error(error);
-      });
+        throw new Error(error)
+      })
 
   const findOne = async (...args) => {
     try {
-      const result = await Model.findOne(...args);
+      const result = await Model.findOne(...args)
       if (result) {
-        return toEntity(result._doc);
+        return toEntity(result._doc)
       }
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
-  };
+  }
 
   const validatePassword = (endcodedPassword) => (password) =>
-    comparePassword(password, endcodedPassword);
+    comparePassword(password, endcodedPassword)
 
-  const destroy = (...args) => Model.destroy(...args);
+  const destroy = (...args) => Model.destroy(...args)
 
   return {
     getAll,
@@ -57,6 +57,6 @@ module.exports = ({ model: Model }) => {
     findById,
     findOne,
     validatePassword,
-    destroy,
-  };
-};
+    destroy
+  }
+}

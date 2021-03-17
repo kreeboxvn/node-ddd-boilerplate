@@ -1,5 +1,5 @@
-const Status = require("http-status");
-const { Router } = require("express");
+const Status = require('http-status')
+const { Router } = require('express')
 
 module.exports = ({
   getUseCase,
@@ -8,9 +8,9 @@ module.exports = ({
   deleteUseCase,
   logger,
   auth,
-  response: { Success, Fail },
+  response: { Success, Fail }
 }) => {
-  const router = Router();
+  const router = Router()
 
   /**
    * @swagger
@@ -37,7 +37,7 @@ module.exports = ({
    *         format: uuid
    */
 
-  router.use(auth.authenticate());
+  router.use(auth.authenticate())
 
   /**
    * @swagger
@@ -58,17 +58,17 @@ module.exports = ({
    *       401:
    *        $ref: '#/responses/Unauthorized'
    */
-  router.get("/", (req, res) => {
+  router.get('/', (req, res) => {
     getUseCase
       .all(req, res)
       .then((data) => {
-        res.status(Status.OK).json(Success(data));
+        res.status(Status.OK).json(Success(data))
       })
       .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
+        logger.error(error) // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message))
+      })
+  })
   /**
    * @swagger
    * /users:
@@ -98,17 +98,17 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post("/", (req, res) => {
+  router.post('/', (req, res) => {
     postUseCase
       .create({ body: req.body })
       .then((data) => {
-        res.status(Status.OK).json(Success(data));
+        res.status(Status.OK).json(Success(data))
       })
       .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
+        logger.error(error) // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message))
+      })
+  })
   /**
    * @swagger
    * /users:
@@ -143,17 +143,17 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.put("/:id", (req, res) => {
+  router.put('/:id', (req, res) => {
     putUseCase
       .update({ id: req.params.id, body: req.body })
       .then((data) => {
-        res.status(Status.OK).json(Success(data));
+        res.status(Status.OK).json(Success(data))
       })
       .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
+        logger.error(error) // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message))
+      })
+  })
 
   /**
    * @swagger
@@ -180,16 +180,16 @@ module.exports = ({
    *       401:
    *         $ref: '#/responses/Unauthorized'
    */
-  router.delete("/:id", (req, res) => {
+  router.delete('/:id', (req, res) => {
     deleteUseCase
       .remove({ id: req.params.id })
       .then((data) => {
-        res.status(Status.OK).json(Success(data));
+        res.status(Status.OK).json(Success(data))
       })
       .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-  return router;
-};
+        logger.error(error) // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message))
+      })
+  })
+  return router
+}
