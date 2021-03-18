@@ -8,22 +8,17 @@ const { User } = require('src/domain/user')
  */
 module.exports = ({ userRepository }) => {
   // code for getting all the items
-  const create = async (root, args) => {
+  const create = async ({ body }) => {
     try {
       const existingUser = await userRepository.findOne({
-        email: args.userInput.email
+        email: body.email
       })
 
       if (existingUser) {
         throw new Error('User exists already.')
       }
 
-      const password = args.userInput.password || 'test'
-      const hashedPassword = await bcrypt.hash(password, 12)
-
-      const entity = Object.assign({}, args.userInput, {
-        password: hashedPassword
-      })
+      const entity = Object.assign({}, body)
       const user = User(entity)
       return userRepository.create(user)
     } catch (error) {

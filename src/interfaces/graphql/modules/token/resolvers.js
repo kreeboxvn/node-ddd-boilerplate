@@ -1,14 +1,17 @@
 const container = require('src/container') // we have to get the DI
-const { login } = require('src/app/token')
+const { login: appLogin } = require('src/app/token')
 
 module.exports = () => {
   const {
-    repository: { userRepository }
+    repository: { userRepository },
+    jwt
   } = container.cradle
 
-  const createUser = login({ userRepository })
+  const { login } = appLogin({ userRepository, webToken: jwt })
 
   return {
-    Mutation: { createUser }
+    Query: {
+      login: (root, args) => login({ body: args })
+    }
   }
 }

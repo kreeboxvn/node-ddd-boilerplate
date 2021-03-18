@@ -10,7 +10,7 @@ const errorHandler = require('./middlewares/error_handler')
 const { graphqlHTTP } = require('express-graphql')
 const schema = require('./modules')
 
-module.exports = ({ config, logger, database }) => {
+module.exports = ({ config, logger, database, auth }) => {
   const router = Router()
 
   /* istanbul ignore if */
@@ -23,10 +23,26 @@ module.exports = ({ config, logger, database }) => {
     router.use(httpLogger(logger))
   }
 
-  const graphqlRouter = graphqlHTTP({
-    schema: schema(),
-    graphiql: {
-      headerEditorEnabled: true
+  console.log('checking auth:', auth)
+
+  const getUser = (req, res) =>
+    new Promise((resolve, reject) => {
+      console.log('running getUser')
+      auth.authenticate('jwt', { session: false }, (err, user) => {
+        console.log('authentication result: ', err, user)
+        if (err) reject(err)
+        resolve(user)
+      })(req, res)
+    })
+
+  const graphqlRouter = graphqlHTTP(async (req, res) => {
+    const user = await getUser(req, res)
+    return {
+      schema: schema(),
+      graphiql: {
+        headerEditorEnabled: true
+      },
+      context: { user }
     }
   })
 

@@ -6,9 +6,11 @@ module.exports = () => {
     repository: { userRepository }
   } = container.cradle
 
-  const createUser = create({ userRepository })
+  const { create: createUser } = create({ userRepository })
 
   return {
-    Mutation: { createUser: createUser.create }
+    Mutation: {
+      createUser: (root, args) => createUser({ body: args.userInput })
+    }
   }
 }

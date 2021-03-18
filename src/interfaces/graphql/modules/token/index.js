@@ -8,7 +8,7 @@ module.exports = () => {
     tokenExpiration: Int!
   }
   extend type Query {
-      login(email: String!, password: String!): AuthData!
+      login(email: String!, password: String!): AuthData
   }
 `
   return {

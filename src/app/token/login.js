@@ -13,12 +13,9 @@ module.exports = ({ userRepository, webToken }) => {
       try {
         const credentials = Token(body)
         const userCredentials = await userRepository.findOne({
-          attributes: ['id', 'email', 'password'],
-          where: {
-            email: credentials.email,
-            isDeleted: 0
-          }
+          email: credentials.email
         })
+        console.log('logging in...', userCredentials)
 
         const validatePass = userRepository.validatePassword(
           userCredentials.password

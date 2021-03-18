@@ -13,19 +13,19 @@ module.exports = ({ config, repository: { userRepository } }) => {
   const strategy = new Strategy(params, (payload, done) => {
     userRepository
       .findById(payload.id)
-      .then((user) => {
+      .then(user => {
         done(null, user)
       })
-      .catch((error) => done(error, null))
+      .catch(error => done(error, null))
   })
 
   passport.use(strategy)
 
-  passport.serializeUser(function (user, done) {
+  passport.serializeUser(function(user, done) {
     done(null, user)
   })
 
-  passport.deserializeUser(function (user, done) {
+  passport.deserializeUser(function(user, done) {
     done(null, user)
   })
 

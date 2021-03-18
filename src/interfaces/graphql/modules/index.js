@@ -5,7 +5,12 @@ const createSchema = require('../utils/create_schema')
 
 module.exports = () => {
   const { schema: userSchema, resolvers: userResolvers } = createSchema('user')
-  const { schema: tokenSchema, resolvers: tokenResolvers } = createSchema('token') // eslint-disable-line no-unused-vars
+  const { schema: tokenSchema, resolvers: tokenResolvers } = createSchema(
+    'token'
+  ) // eslint-disable-line no-unused-vars
+  const { schema: projectSchema, resolvers: projectResolvers } = createSchema(
+    'project'
+  ) // eslint-disable-line no-unused-vars
 
   const baseSchema = [
     `
@@ -22,11 +27,16 @@ module.exports = () => {
     `
   ]
 
-  const schema = [...baseSchema, ...userSchema, ...tokenSchema]
+  const schema = [
+    ...baseSchema,
+    ...userSchema,
+    ...tokenSchema,
+    ...projectSchema
+  ]
 
   const options = {
     typeDefs: schema,
-    resolvers: merge(userResolvers)
+    resolvers: merge(userResolvers, tokenResolvers, projectResolvers)
   }
 
   return makeExecutableSchema(options)
